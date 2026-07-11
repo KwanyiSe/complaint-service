@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <h2>📤 Submit Complaints & Upload Snapshot</h2>
+    <p>You are marking the following complaints as submitted. Upload a photo of the submitted form.</p>
+
+    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <h4>Selected Complaints:</h4>
+        <ul>
+        {% for c in complaints %}
+            <li>
+                <strong>#{{ c.id }}</strong> - {{ c.name }} ({{ c.course_code }})<br>
+                <small>📌 Submit to: {{ c.submission_office }}</small><br>
+                <small>📱 Student: {{ c.phone_number }}</small>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="margin-top: 20px;">
+            <input type="submit" value="✅ Submit Complaints" class="default" style="padding: 10px 20px;">
+            <a href="../" style="margin-left: 10px;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Complaint Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background: rgba(255,255,255,0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .hero-section {
+            padding: 80px 0 60px;
+            color: white;
+        }
+        .hero-section h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+        .hero-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .card-custom {
+            background: white;
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .btn-primary {
+            background: #667eea;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background: #5a6fd1;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-outline-primary {
+            border-radius: 30px;
+            padding: 8px 25px;
+            font-weight: 600;
+            border-color: #667eea;
+            color: #667eea;
+        }
+        .btn-outline-primary:hover {
+            background: #667eea;
+            color: white;
+        }
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        footer {
+            background: rgba(0,0,0,0.2);
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+            .hero-section {
+                padding: 50px 0 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="/">
+                📋 Student Complaint
+            </a>
+            <div>
+                <a href="{% url 'complaint_form' %}" class="btn btn-primary me-2">Submit Complaint</a>
+                <a href="{% url 'track' %}" class="btn btn-outline-primary">Track Status</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h1>We Handle Your Academic Complaints</h1>
+                    <p class="lead mt-3">
+                        Traveld to Yauonde, Douala etc or to the village? We'll submit your complaint to the right office for you.
+                        on time and show you a proof.
+                    </p>
+                    <a href="{% url 'complaint_form' %}" class="btn btn-light btn-lg mt-4 px-5 py-3 fw-bold shadow">
+                        Start Your Complaint →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="card-custom p-4 text-center h-100">
+                    <div class="step-icon">📝</div>
+                    <h5>1. Fill the Form</h5>
+                    <p class="text-muted">Provide your details, complaint info, and upload documents.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom p-4 text-center h-100">
+                    <div class="step-icon">💳</div>
+                    <h5>2. Pay via MoMo</h5>
+                    <p class="text-muted">Send the fee and upload your payment screenshot.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom p-4 text-center h-100">
+                    <div class="step-icon">✅</div>
+                    <h5>3. We Submit It</h5>
+                    <p class="text-muted">We deliver your complaint to the office and send you proof.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        <small>© 2026 Student Complaint Service | Reliable & Fast</small>
+    </footer>
+</body>
+</html>
