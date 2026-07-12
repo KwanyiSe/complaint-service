@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from .forms import ComplaintForm, PaymentForm
 from .models import Complaint
+from .notifications import send_admin_email   # new import
 
 def home(request):
     """Landing page"""
@@ -13,6 +14,11 @@ def complaint_form(request):
         form = ComplaintForm(request.POST, request.FILES)
         if form.is_valid():
             complaint = form.save()
+            # Send email to admin
+            try:
+                send_admin_email(complaint)
+            except:
+                pass
             return redirect('payment', complaint_id=complaint.id)
     else:
         form = ComplaintForm()

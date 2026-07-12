@@ -22,6 +22,7 @@ class Complaint(models.Model):
     )
     school = models.CharField(max_length=200, verbose_name="School/Faculty")
     phone_number = models.CharField(max_length=20, verbose_name="Phone Number (for updates)")
+    email = models.EmailField(max_length=254, verbose_name="Email Address", blank=True)   # <-- NEW
 
     # Complaint Details
     complaint_number = models.CharField(max_length=100, verbose_name="Complaint Number")

@@ -4,8 +4,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-change-this-in-production-abc123'
-DEBUG = False
-ALLOWED_HOSTS = ['kwanyise.pythonanywhere.com']
+DEBUG = True
+ALLOWED_HOSTS =["*"] #['kwanyise.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -65,3 +65,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Payment settings
 COMPLAINT_FEE = "2000"  # XAF
 MOMO_NUMBER = "654717023"
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'sedrickbodeh654@gmail.com'        # your Gmail
+EMAIL_HOST_PASSWORD = 'qbys ozbu ohog cflk'          # the app password created from my email account
+ADMIN_EMAIL = 'sedrickbodeh654@gmail.com'            # receive new complaint alerts

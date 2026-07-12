@@ -5,7 +5,7 @@ class ComplaintForm(forms.ModelForm):
     class Meta:
         model = Complaint
         fields = [
-            'name', 'matricule', 'level', 'semester',   # ← new fields
+            'name', 'matricule', 'email', 'level', 'semester',   # email added
             'school', 'phone_number',
             'complaint_number', 'submission_office', 'complaint_text',
             'course', 'course_code', 'ca_mark', 'exam_mark',
@@ -19,6 +19,10 @@ class ComplaintForm(forms.ModelForm):
             'matricule': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter your matricule number'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'e.g., student@example.com'
             }),
             'level': forms.TextInput(attrs={
                 'class': 'form-control',
