@@ -42,3 +42,4 @@ local_settings.py
 ehthumbs.db
 Thumbs.db
 myenv/
+node_modules/

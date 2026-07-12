@@ -1,98 +1,193 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Payment</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f8f9fb;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-        }
-        .payment-info {
-            background: #fff3e0;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-        .btn-upload {
-            background: #28a745;
-            border: none;
-            border-radius: 30px;
-            padding: 12px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: 0.3s;
-        }
-        .btn-upload:hover {
-            background: #218838;
-        }
-        .success-icon {
-            font-size: 3rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete your payment via MoMo to activate your complaint submission.">
+  <title>Payment — Student Complaint Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'complaints/css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'complaints/css/payment.css' %}">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-success" href="/">💳 Payment</a>
-            <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm rounded-pill">← Home</a>
-        </div>
-    </nav>
+<body class="payment-page">
 
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="card">
-                    {% if payment_done %}
-                        <div class="card-body text-center p-5">
-                            <div class="success-icon">🎉</div>
-                            <h3 class="mt-3 text-success">Payment Proof Received!</h3>
-                            <p class="text-muted">Complaint ID: <strong>#{{ complaint.id }}</strong></p>
-                            <div class="alert alert-info mt-3">
-                                We'll verify your payment and submit your complaint to<br>
-                                <strong>{{ complaint.submission_office }}</strong>.
-                            </div>
-                            <a href="{% url 'status' complaint.id %}" class="btn btn-primary rounded-pill px-4">Track Status</a>
-                            <a href="{% url 'complaint_form' %}" class="btn btn-outline-secondary rounded-pill px-4">New Complaint</a>
-                        </div>
-                    {% else %}
-                        <div class="card-body p-4 p-md-5">
-                            <h4 class="text-center mb-3">Complete Your Payment</h4>
-                            <div class="payment-info mb-4">
-                                <p class="mb-1 fw-bold">Send exactly:</p>
-                                <h3 class="text-danger mb-2">{{ fee }} XAF</h3>
-                                <p class="mb-1 fw-bold">To MoMo Number:</p>
-                                <h4 class="text-primary">{{ momo_number }}</h4>
-                                <small class="text-muted">Use Complaint ID #{{ complaint.id }} as reference</small>
-                            </div>
-                            <hr>
-                            <h5 class="text-success">📸 Upload Payment Screenshot</h5>
-                            <p class="text-muted">After sending the money, upload a screenshot of your MoMo confirmation.</p>
-                            <form method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    {{ form.payment_screenshot }}
-                                </div>
-                                <button type="submit" class="btn btn-upload w-100 text-white">
-                                    Upload & Confirm Payment
-                                </button>
-                            </form>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+  <!-- NAVBAR -->
+  <nav class="cs-navbar" id="navbar">
+    <a href="/" class="cs-navbar__brand">
+      <div class="brand-icon"><i data-lucide="clipboard-list"></i></div>
+      ComplaintService
+    </a>
+    <button class="cs-navbar__mobile-toggle" id="mobileMenuToggle">
+      <i data-lucide="menu"></i>
+    </button>
+    <div class="cs-navbar__links" id="navLinks">
+      <a href="{% url 'home' %}" class="btn btn-outline btn-sm">← Home</a>
     </div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="payment-header">
+    <div class="payment-header__inner">
+      <a href="{% url 'home' %}" class="payment-header__back">← Back to Home</a>
+      {% if payment_done %}
+        <h1 class="payment-header__title anim-fade-up">🎉 Payment Received!</h1>
+        <p class="payment-header__sub anim-fade-up anim-delay-1">Your complaint is now queued for delivery.</p>
+      {% else %}
+        <h1 class="payment-header__title anim-fade-up">Complete Payment</h1>
+        <p class="payment-header__sub anim-fade-up anim-delay-1">Step 2 of 3 — Pay via MoMo to activate your submission</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- PAYMENT CARD -->
+  <div class="payment-container">
+    <div class="payment-card anim-fade-up anim-delay-1">
+
+      {% if payment_done %}
+        <!-- ===== SUCCESS STATE ===== -->
+        <div class="success-wrapper">
+          <div class="success-icon-wrap"><i data-lucide="check-circle-2" style="width: 48px; height: 48px; color: var(--green-600);"></i></div>
+          <h2 class="success-title">Payment Proof Received!</h2>
+          <div class="success-complaint-id">Complaint #{{ complaint.id }}</div>
+          <div class="success-info">
+            ✅ We've received your payment screenshot and will verify it shortly.<br>
+            Once confirmed, your complaint will be physically submitted to:<br>
+            <strong>{{ complaint.submission_office }}</strong>
+          </div>
+          <p style="font-size:.85rem;color:var(--gray-400);margin-bottom:28px;">
+            You'll receive a photo proof of delivery once it's done. Track your status below.
+          </p>
+          <div class="success-actions">
+            <a href="{% url 'status' complaint.id %}" class="btn btn-primary btn-lg" id="trackAfterPayBtn">
+              Track My Status →
+            </a>
+            <a href="{% url 'complaint_form' %}" class="btn btn-outline" id="newComplaintBtn">
+              New Complaint
+            </a>
+          </div>
+        </div>
+
+      {% else %}
+        <!-- ===== PAYMENT INSTRUCTIONS ===== -->
+
+        <!-- MoMo Details Block -->
+        <div class="momo-block">
+          <div class="momo-block__label">Amount to Send</div>
+          <div class="momo-block__amount">{{ fee }}</div>
+          <div class="momo-block__currency">XAF — Mobile Money</div>
+
+          <div class="momo-divider"></div>
+
+          <div class="momo-number-box">
+            <div class="momo-number-box__label">Send to MoMo Number</div>
+            <div class="momo-number-box__number">{{ momo_number }}</div>
+          </div>
+          <div class="momo-ref-note">
+            Use <strong>Complaint ID #{{ complaint.id }}</strong> as your payment reference message.
+          </div>
+        </div>
+
+        <!-- Steps -->
+        <div class="payment-steps">
+          <div class="payment-steps__title">📱 How to Pay</div>
+          <div class="payment-steps__list">
+            <div class="ps-item">
+              <div class="ps-item__num">1</div>
+              Open your Mobile Money (MTN or Orange) app
+            </div>
+            <div class="ps-item">
+              <div class="ps-item__num">2</div>
+              Send <strong>{{ fee }} XAF</strong> to <strong>{{ momo_number }}</strong>
+            </div>
+            <div class="ps-item">
+              <div class="ps-item__num">3</div>
+              Use <em>Complaint #{{ complaint.id }}</em> as your reference note
+            </div>
+            <div class="ps-item">
+              <div class="ps-item__num">4</div>
+              Screenshot your MoMo confirmation and upload it below
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+          <div class="upload-section__title">📸 Upload Payment Screenshot</div>
+          <div class="upload-section__sub">
+            Take a clear screenshot of your MoMo payment confirmation and upload it here.
+            This lets us verify and process your complaint immediately.
+          </div>
+          <form method="post" enctype="multipart/form-data" class="cs-form" id="paymentForm">
+            {% csrf_token %}
+            <div class="upload-zone" id="uploadZone">
+              <span class="upload-zone__icon"><i data-lucide="camera"></i></span>
+              {{ form.payment_screenshot }}
+              <div class="upload-zone__hint">JPG, PNG — Max 5MB</div>
+            </div>
+            <button type="submit" class="btn-payment-submit" id="paymentUploadBtn">
+              <span>✓ Confirm Payment & Upload</span>
+            </button>
+          </form>
+        </div>
+
+      {% endif %}
+    </div>
+
+    <!-- Help note -->
+    {% if not payment_done %}
+    <div style="text-align:center;margin-top:20px;">
+      <p style="font-size:.82rem;color:var(--gray-400);">
+        Having trouble? Contact us at
+        <a href="tel:+237654717023" style="color:var(--green-600);font-weight:700;">+237 654 717 023</a>
+      </p>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="cs-footer">
+    <div class="cs-footer__bottom" style="margin-top:0;border-top:none;padding-top:28px;">
+      <p>© 2026 Student Complaint Service · Cameroon</p>
+      <div class="footer-pills">
+        <span class="footer-pill"><i data-lucide="lock" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i> Secure Payment</span>
+        <span class="footer-pill"><i data-lucide="zap" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i> Fast Processing</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'complaints/js/main.js' %}"></script>
+  <script>
+    lucide.createIcons();
+
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (mobileMenuToggle && navLinks) {
+      mobileMenuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        const icon = mobileMenuToggle.querySelector('i');
+        icon.setAttribute('data-lucide', navLinks.classList.contains('active') ? 'x' : 'menu');
+        lucide.createIcons();
+      });
+    }
+
+    // File input change feedback
+    const fileInput = document.querySelector('#uploadZone input[type="file"]');
+    if (fileInput) {
+      fileInput.addEventListener('change', function() {
+        const hint = document.querySelector('.upload-zone__hint');
+        if (this.files.length) {
+          hint.textContent = '✓ ' + this.files[0].name;
+          hint.style.color = 'var(--green-600)';
+          hint.style.fontWeight = '700';
+        }
+      });
+    }
+  </script>
 </body>
 </html>

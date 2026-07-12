@@ -1,147 +1,374 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Complaint Service</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .navbar {
-            background: rgba(255,255,255,0.95) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .hero-section {
-            padding: 80px 0 60px;
-            color: white;
-        }
-        .hero-section h1 {
-            font-weight: 800;
-            font-size: 2.5rem;
-            line-height: 1.2;
-        }
-        .hero-section p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        .card-custom {
-            background: white;
-            border: none;
-            border-radius: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .card-custom:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        .btn-primary {
-            background: #667eea;
-            border: none;
-            border-radius: 30px;
-            padding: 10px 30px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .btn-primary:hover {
-            background: #5a6fd1;
-            transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        .btn-outline-primary {
-            border-radius: 30px;
-            padding: 8px 25px;
-            font-weight: 600;
-            border-color: #667eea;
-            color: #667eea;
-        }
-        .btn-outline-primary:hover {
-            background: #667eea;
-            color: white;
-        }
-        .step-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        footer {
-            background: rgba(0,0,0,0.2);
-            color: white;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-        @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 1.8rem;
-            }
-            .hero-section {
-                padding: 50px 0 30px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student Complaint Service — We submit your academic complaints to the right university office on your behalf, even when you're far away.">
+  <title>Student Complaint Service — Fast, Reliable & Trustworthy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'complaints/css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'complaints/css/home.css' %}">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="/">
-                📋 Student Complaint
-            </a>
-            <div>
-                <a href="{% url 'complaint_form' %}" class="btn btn-primary me-2">Submit Complaint</a>
-                <a href="{% url 'track' %}" class="btn btn-outline-primary">Track Status</a>
-            </div>
-        </div>
-    </nav>
 
-    <section class="hero-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 text-center">
-                    <h1>We Handle Your Academic Complaints</h1>
-                    <p class="lead mt-3">
-                        Traveld to Yauonde, Douala etc or to the village? We'll submit your complaint to the right office for you.
-                        on time and show you a proof.
-                    </p>
-                    <a href="{% url 'complaint_form' %}" class="btn btn-light btn-lg mt-4 px-5 py-3 fw-bold shadow">
-                        Start Your Complaint →
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="row g-4 justify-content-center">
-            <div class="col-md-4">
-                <div class="card-custom p-4 text-center h-100">
-                    <div class="step-icon">📝</div>
-                    <h5>1. Fill the Form</h5>
-                    <p class="text-muted">Provide your details, complaint info, and upload documents.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card-custom p-4 text-center h-100">
-                    <div class="step-icon">💳</div>
-                    <h5>2. Pay via MoMo</h5>
-                    <p class="text-muted">Send the fee and upload your payment screenshot.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card-custom p-4 text-center h-100">
-                    <div class="step-icon">✅</div>
-                    <h5>3. We Submit It</h5>
-                    <p class="text-muted">We deliver your complaint to the office and send you proof.</p>
-                </div>
-            </div>
-        </div>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="cs-navbar" id="navbar">
+    <a href="/" class="cs-navbar__brand">
+      <div class="brand-icon"><i data-lucide="clipboard-list"></i></div>
+      ComplaintService
+    </a>
+    <button class="cs-navbar__mobile-toggle" id="mobileMenuToggle">
+      <i data-lucide="menu"></i>
+    </button>
+    <div class="cs-navbar__links" id="navLinks">
+      <a href="#how-it-works">How It Works</a>
+      <a href="#why-us">Why Us</a>
+      <a href="{% url 'track' %}">Track Status</a>
+      <a href="{% url 'complaint_form' %}" class="btn btn-primary btn-sm" id="nav-submit-cta">Submit Complaint</a>
     </div>
+  </nav>
 
-    <footer class="text-center">
-        <small>© 2026 Student Complaint Service | Reliable & Fast</small>
-    </footer>
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero__inner">
+
+      <div class="hero__content anim-fade-up">
+        <div class="hero__eyebrow">
+          <span></span>
+          Trusted by Cameroonian Students
+        </div>
+        <h1 class="hero__title">
+          Your Academic<br>Complaint, <em>Handled</em><br>Without Hassle.
+        </h1>
+        <p class="hero__desc">
+          Traveling to Yaoundé, Douala, or the village? We step in — filling, delivering,
+          and confirming your complaint to the right university office, on time, with proof.
+        </p>
+        <div class="hero__actions">
+          <a href="{% url 'complaint_form' %}" class="btn btn-primary btn-lg" id="hero-cta-primary">
+            Start My Complaint →
+          </a>
+          <a href="{% url 'track' %}" class="btn btn-ghost btn-lg" id="hero-cta-track">
+            Track Existing
+          </a>
+        </div>
+      </div>
+
+      <!-- Floating visual card -->
+      <div class="hero__visual anim-fade-up anim-delay-3">
+        <div class="hero-card">
+          <div class="hero-card__header">
+            <span class="hero-card__title">Live Processing</span>
+            <span class="hero-card__badge">● Active</span>
+          </div>
+          <div class="hero-stat-row">
+            <div class="hero-stat">
+              <span class="hero-stat__value">24h</span>
+              <span class="hero-stat__label">Avg. Delivery</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat__value">98%</span>
+              <span class="hero-stat__label">Success Rate</span>
+            </div>
+          </div>
+          <div class="hero-progress-item">
+            <div class="hero-progress-label">
+              <span>Complaints Delivered</span><span>87%</span>
+            </div>
+            <div class="hero-progress-bar">
+              <div class="hero-progress-fill" data-width="87%" style="width:0"></div>
+            </div>
+          </div>
+          <div class="hero-progress-item">
+            <div class="hero-progress-label">
+              <span>Payment Verified</span><span>94%</span>
+            </div>
+            <div class="hero-progress-bar">
+              <div class="hero-progress-fill" data-width="94%" style="width:0"></div>
+            </div>
+          </div>
+          <div class="hero-progress-item">
+            <div class="hero-progress-label">
+              <span>Student Satisfaction</span><span>99%</span>
+            </div>
+            <div class="hero-progress-bar">
+              <div class="hero-progress-fill" data-width="99%" style="width:0"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== STATS STRIP ===== -->
+  <div class="stats-strip">
+    <div class="stats-strip__inner">
+      <div class="stat-item anim-on-scroll">
+        <span class="stat-item__value stat-animate" data-target="500" data-suffix="+">0+</span>
+        <span class="stat-item__label">Complaints Handled</span>
+      </div>
+      <div class="stat-item anim-on-scroll">
+        <span class="stat-item__value stat-animate" data-target="24" data-suffix="h">0h</span>
+        <span class="stat-item__label">Average Turnaround</span>
+      </div>
+      <div class="stat-item anim-on-scroll">
+        <span class="stat-item__value stat-animate" data-target="98" data-suffix="%">0%</span>
+        <span class="stat-item__label">Success Rate</span>
+      </div>
+      <div class="stat-item anim-on-scroll">
+        <span class="stat-item__value stat-animate" data-target="12" data-suffix="">0</span>
+        <span class="stat-item__label">Universities Served</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="section-how" id="how-it-works">
+    <div class="section-how__inner">
+      <div class="section-how__head anim-on-scroll">
+        <div class="section-eyebrow">Simple 3-Step Process</div>
+        <h2 class="section-how__title">Complaint Submitted in Minutes</h2>
+        <p class="section-how__subtitle">
+          No need to travel — complete everything online from wherever you are.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card anim-on-scroll">
+          <div class="step-card__number">1</div>
+          <span class="step-card__icon"><i data-lucide="file-edit"></i></span>
+          <h3 class="step-card__title">Fill the Form</h3>
+          <p class="step-card__desc">
+            Provide your student details, complaint info, and upload any supporting academic documents.
+          </p>
+        </div>
+        <div class="step-card anim-on-scroll anim-delay-2">
+          <div class="step-card__number">2</div>
+          <span class="step-card__icon"><i data-lucide="credit-card"></i></span>
+          <h3 class="step-card__title">Pay via MoMo</h3>
+          <p class="step-card__desc">
+            Send the service fee to our MoMo number and upload a screenshot as proof of payment.
+          </p>
+        </div>
+        <div class="step-card anim-on-scroll anim-delay-4">
+          <div class="step-card__number">3</div>
+          <span class="step-card__icon"><i data-lucide="check-circle-2"></i></span>
+          <h3 class="step-card__title">We Deliver It</h3>
+          <p class="step-card__desc">
+            We physically submit your complaint to the right office and send you photographic proof.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="section-features" id="why-us">
+    <div class="section-features__inner">
+
+      <div class="features-text anim-on-scroll">
+        <div class="section-eyebrow">Why Choose Us</div>
+        <h2 class="features-text__title">Built Around Student Needs</h2>
+        <p class="features-text__desc">
+          We understand the university system in Cameroon — the offices, the processes,
+          and the frustration. Our service removes the guesswork and the travel.
+        </p>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-item__icon"><i data-lucide="shield-check"></i></div>
+            <div class="feature-item__text">
+              <strong>100% Secure & Confidential</strong>
+              <p>Your academic data is handled with strict confidentiality and never shared with third parties.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item__icon"><i data-lucide="camera"></i></div>
+            <div class="feature-item__text">
+              <strong>Photo Proof of Delivery</strong>
+              <p>We take a photo of your submitted complaint form at the office and upload it to your dashboard.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item__icon"><i data-lucide="bell-ring"></i></div>
+            <div class="feature-item__text">
+              <strong>Real-Time Status Tracking</strong>
+              <p>Check your complaint status live — from payment received all the way to successful submission.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-item__icon"><i data-lucide="zap"></i></div>
+            <div class="feature-item__text">
+              <strong>Same-Day Processing</strong>
+              <p>Once payment is verified, we prioritize delivery within the same working day.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-visual anim-on-scroll anim-delay-2">
+        <div class="fv-card">
+          <span class="fv-card__icon"><i data-lucide="clipboard-list"></i></span>
+          <span class="fv-card__value">500+</span>
+          <span class="fv-card__label">Forms Submitted</span>
+        </div>
+        <div class="fv-card fv-card--accent">
+          <span class="fv-card__icon"><i data-lucide="timer"></i></span>
+          <span class="fv-card__value">24h</span>
+          <span class="fv-card__label">Avg. Delivery</span>
+        </div>
+        <div class="fv-card fv-card--accent">
+          <span class="fv-card__icon"><i data-lucide="graduation-cap"></i></span>
+          <span class="fv-card__value">12+</span>
+          <span class="fv-card__label">Universities</span>
+        </div>
+        <div class="fv-card">
+          <span class="fv-card__icon"><i data-lucide="star"></i></span>
+          <span class="fv-card__value">4.9</span>
+          <span class="fv-card__label">Student Rating</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="section-trust">
+    <div class="section-trust__inner">
+      <div class="section-trust__head anim-on-scroll">
+        <div class="section-eyebrow">Student Reviews</div>
+        <h2 style="font-size:2rem;color:var(--green-900);">What Students Say</h2>
+      </div>
+      <div class="trust-cards">
+        <div class="trust-card anim-on-scroll">
+          <div class="trust-card__stars">★★★★★</div>
+          <p class="trust-card__text">
+            "I was in my village when results came out with an error. This service submitted my complaint the same day I contacted them. My mark was corrected within a week!"
+          </p>
+          <div class="trust-card__author">
+            <div class="trust-card__avatar">AM</div>
+            <div class="trust-card__author-info">
+              <strong>Amara M.</strong>
+              <span>Level 300 — University of Buea</span>
+            </div>
+          </div>
+        </div>
+        <div class="trust-card anim-on-scroll anim-delay-2">
+          <div class="trust-card__stars">★★★★★</div>
+          <p class="trust-card__text">
+            "Affordable, fast and they sent me a photo of the submitted form. I was skeptical at first but the proof of submission made all the difference."
+          </p>
+          <div class="trust-card__author">
+            <div class="trust-card__avatar">JF</div>
+            <div class="trust-card__author-info">
+              <strong>Jean F.</strong>
+              <span>Level 200 — FMBS Yaoundé</span>
+            </div>
+          </div>
+        </div>
+        <div class="trust-card anim-on-scroll anim-delay-4">
+          <div class="trust-card__stars">★★★★★</div>
+          <p class="trust-card__text">
+            "I had 3 complaints to make at different offices — they handled all three in one day. Tracking was smooth and I could see each status update in real time."
+          </p>
+          <div class="trust-card__author">
+            <div class="trust-card__avatar">GN</div>
+            <div class="trust-card__author-info">
+              <strong>Grace N.</strong>
+              <span>Masters — UYI Ngoa-Ekele</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section-cta" id="start-now">
+    <div class="section-cta__inner anim-on-scroll">
+      <div class="section-eyebrow" style="background:rgba(104,211,145,.15);border-color:rgba(104,211,145,.3);color:var(--green-300);">Get Started Today</div>
+      <h2 class="section-cta__title">Don't Let Distance Stop You</h2>
+      <p class="section-cta__desc">
+        Whether you're in Douala, Yaoundé, or your home village — we make sure your academic
+        rights are defended. Submit your complaint in under 5 minutes.
+      </p>
+      <div class="section-cta__actions">
+        <a href="{% url 'complaint_form' %}" class="btn btn-white btn-lg" id="cta-submit-btn">
+          Submit My Complaint →
+        </a>
+        <a href="{% url 'track' %}" class="btn btn-ghost btn-lg" id="cta-track-btn">
+          Track Existing Status
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="cs-footer">
+    <div class="cs-footer__grid">
+      <div class="cs-footer__brand-col">
+        <div class="brand-name">📋 ComplaintService</div>
+        <p>
+          A dedicated service helping Cameroonian university students get their academic
+          complaints submitted correctly and on time — no matter where they are.
+        </p>
+      </div>
+      <div>
+        <div class="cs-footer__col-title">Quick Links</div>
+        <div class="cs-footer__links">
+          <a href="{% url 'complaint_form' %}">Submit a Complaint</a>
+          <a href="{% url 'track' %}">Track My Complaint</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#why-us">Why Choose Us</a>
+        </div>
+      </div>
+      <div>
+        <div class="cs-footer__col-title">Support</div>
+        <div class="cs-footer__links">
+          <a href="tel:+237654717023">+237 654 717 023</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact Us</a>
+          <a href="#privacy">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="cs-footer__bottom" style="margin-top:40px;">
+      <p>© 2026 Student Complaint Service · Cameroon · All Rights Reserved</p>
+      <div class="footer-pills">
+        <span class="footer-pill"><i data-lucide="lock" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i> Secure</span>
+        <span class="footer-pill"><i data-lucide="zap" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i> Fast</span>
+        <span class="footer-pill"><i data-lucide="check-circle" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i> Reliable</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'complaints/js/main.js' %}"></script>
+  <script>
+    lucide.createIcons();
+    
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (mobileMenuToggle && navLinks) {
+      mobileMenuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        
+        // Toggle icon
+        const icon = mobileMenuToggle.querySelector('i');
+        if (navLinks.classList.contains('active')) {
+          icon.setAttribute('data-lucide', 'x');
+        } else {
+          icon.setAttribute('data-lucide', 'menu');
+        }
+        lucide.createIcons();
+      });
+    }
+  </script>
 </body>
 </html>

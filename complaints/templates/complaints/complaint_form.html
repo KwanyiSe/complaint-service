@@ -1,159 +1,291 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Complaint</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f8f9fb;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-        }
-        .card-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 15px 15px 0 0 !important;
-        }
-        .form-label {
-            font-weight: 600;
-            color: #333;
-        }
-        .btn-submit {
-            background: #667eea;
-            border: none;
-            border-radius: 30px;
-            padding: 12px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: 0.3s;
-        }
-        .btn-submit:hover {
-            background: #5a6fd1;
-        }
-        hr {
-            border-top: 2px solid #eef0f4;
-        }
-        small.text-muted {
-            font-size: 0.8rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Submit your academic complaint securely. Fill in your details and we'll handle the rest.">
+  <title>Submit Complaint — Student Complaint Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'complaints/css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'complaints/css/form.css' %}">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="/">📋 Complaint Service</a>
-            <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm rounded-pill">← Back</a>
-        </div>
-    </nav>
+<body class="form-page">
 
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="card-header text-white text-center py-3">
-                        <h4 class="mb-0">Submit Your Complaint</h4>
-                        <small>Complete all fields correctly for fast processing</small>
-                    </div>
-                    <div class="card-body p-4 p-md-5">
-                        <form method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-
-                            <h5 class="text-primary mb-3">👤 Student Information</h5>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Full Name *</label>
-                                    {{ form.name }}
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Matricule *</label>
-                                    {{ form.matricule }}
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Level *</label>
-                                    {{ form.level }}
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Semester *</label>
-                                    {{ form.semester }}
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">School/Faculty *</label>
-                                    {{ form.school }}
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Phone Number *</label>
-                                    {{ form.phone_number }}
-                                </div>
-                                <!-- EMAIL FIELD -->
-                                <div class="col-md-6">
-                                    <label class="form-label">Email Address</label>
-                                    {{ form.email }}
-                                    <small class="text-muted">We'll send proof of submission here</small>
-                                </div>
-                            </div>
-
-                            <hr class="my-4">
-                            <h5 class="text-primary mb-3">📋 Complaint Details</h5>
-                            <div class="mb-3">
-                                <label class="form-label">Complaint Number *</label>
-                                {{ form.complaint_number }}
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Which office should we submit to? *</label>
-                                {{ form.submission_office }}
-                                <small class="text-muted">Be specific – e.g., Dean's Office, Department of Physics</small>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">What is your complaint? *</label>
-                                {{ form.complaint_text }}
-                            </div>
-
-                            <hr class="my-4">
-                            <h5 class="text-primary mb-3">📚 Academic Details</h5>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Course Title *</label>
-                                    {{ form.course }}
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Course Code *</label>
-                                    {{ form.course_code }}
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">CA Mark *</label>
-                                    {{ form.ca_mark }}
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Exam Mark *</label>
-                                    {{ form.exam_mark }}
-                                </div>
-                            </div>
-
-                            <hr class="my-4">
-                            <h5 class="text-primary mb-3">📎 Supporting Document</h5>
-                            <div class="mb-4">
-                                <label class="form-label">Upload Proof/Document *</label>
-                                {{ form.proof }}
-                                <small class="text-muted">Upload your result slip, transcript, or relevant screenshot</small>
-                            </div>
-
-                            <button type="submit" class="btn btn-submit w-100 text-white mt-3">
-                                Submit & Proceed to Payment →
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- NAVBAR -->
+  <nav class="cs-navbar" id="navbar">
+    <a href="/" class="cs-navbar__brand">
+      <div class="brand-icon"><i data-lucide="clipboard-list"></i></div>
+      ComplaintService
+    </a>
+    <button class="cs-navbar__mobile-toggle" id="mobileMenuToggle">
+      <i data-lucide="menu"></i>
+    </button>
+    <div class="cs-navbar__links" id="navLinks">
+      <a href="{% url 'home' %}" style="color:var(--gray-400);font-size:.8rem;">
+        <i data-lucide="arrow-left" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i> Back to Home
+      </a>
+      <a href="{% url 'track' %}" class="btn btn-outline btn-sm">Track Status</a>
     </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="form-page-header">
+    <div class="form-page-header__inner">
+      <a href="{% url 'home' %}" class="form-page-header__back">
+        ← Back to Home
+      </a>
+      <h1 class="form-page-header__title anim-fade-up">Submit Your Complaint</h1>
+      <p class="form-page-header__sub anim-fade-up anim-delay-1">
+        Complete all fields accurately — this ensures fast and correct processing.
+      </p>
+
+      <!-- Progress indicator -->
+      <div class="form-progress anim-fade-up anim-delay-2">
+        <div class="fp-step active">
+          <div class="fp-step__dot">1</div>
+          <span class="fp-step__label">Details</span>
+        </div>
+        <div class="fp-connector"></div>
+        <div class="fp-step">
+          <div class="fp-step__dot">2</div>
+          <span class="fp-step__label">Payment</span>
+        </div>
+        <div class="fp-connector"></div>
+        <div class="fp-step">
+          <div class="fp-step__dot">3</div>
+          <span class="fp-step__label">Delivered</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-container">
+    <div class="form-card anim-fade-up anim-delay-1">
+      <form method="post" enctype="multipart/form-data" class="cs-form" id="complaintForm">
+        {% csrf_token %}
+
+        <!-- SECTION 1: Student Info -->
+        <div class="form-section">
+          <div class="form-section__header">
+            <div class="form-section__icon"><i data-lucide="user"></i></div>
+            <div>
+              <div class="form-section__title">Student Information</div>
+              <div class="form-section__subtitle">Your personal academic details</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="{{ form.name.id_for_label }}" class="cs-form-label">
+                Full Name <span>*</span>
+              </label>
+              {{ form.name }}
+            </div>
+            <div class="form-field">
+              <label for="{{ form.matricule.id_for_label }}" class="cs-form-label">
+                Matricule Number <span>*</span>
+              </label>
+              {{ form.matricule }}
+            </div>
+            <div class="form-field">
+              <label for="{{ form.level.id_for_label }}" class="cs-form-label">
+                Level <span>*</span>
+              </label>
+              {{ form.level }}
+              <div class="field-hint">e.g. 100, 200, 300, Masters</div>
+            </div>
+            <div class="form-field">
+              <label for="{{ form.semester.id_for_label }}" class="cs-form-label">
+                Semester <span>*</span>
+              </label>
+              {{ form.semester }}
+            </div>
+            <div class="form-field">
+              <label for="{{ form.school.id_for_label }}" class="cs-form-label">
+                School / Faculty <span>*</span>
+              </label>
+              {{ form.school }}
+            </div>
+            <div class="form-field">
+              <label for="{{ form.phone_number.id_for_label }}" class="cs-form-label">
+                Phone Number <span>*</span>
+              </label>
+              {{ form.phone_number }}
+              <div class="field-hint">For status updates via SMS or WhatsApp</div>
+            </div>
+            <div class="form-field" style="grid-column: 1 / -1;">
+              <label for="{{ form.email.id_for_label }}" class="cs-form-label">
+                Email Address <span style="color:var(--gray-400);font-weight:500;">(optional)</span>
+              </label>
+              {{ form.email }}
+              <div class="field-hint">📧 We'll email you proof of submission</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: Complaint Info -->
+        <div class="form-section">
+          <div class="form-section__header">
+            <div class="form-section__icon"><i data-lucide="clipboard-signature"></i></div>
+            <div>
+              <div class="form-section__title">Complaint Details</div>
+              <div class="form-section__subtitle">Describe your complaint clearly</div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="{{ form.complaint_number.id_for_label }}" class="cs-form-label">
+              Complaint Number <span>*</span>
+            </label>
+            {{ form.complaint_number }}
+            <div class="field-hint">Your official complaint reference number from the university</div>
+          </div>
+
+          <div class="form-field">
+            <label for="{{ form.submission_office.id_for_label }}" class="cs-form-label">
+              Which office should we submit to? <span>*</span>
+            </label>
+            {{ form.submission_office }}
+            <div class="field-hint">Be specific — e.g., Dean's Office, Department of Physics, Exams & Records</div>
+          </div>
+
+          <div class="form-field">
+            <label for="{{ form.complaint_text.id_for_label }}" class="cs-form-label">
+              Describe Your Complaint <span>*</span>
+            </label>
+            {{ form.complaint_text }}
+            <div class="field-hint">Include all relevant details so the office can process quickly</div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Academic Details -->
+        <div class="form-section">
+          <div class="form-section__header">
+            <div class="form-section__icon"><i data-lucide="book-open"></i></div>
+            <div>
+              <div class="form-section__title">Academic Details</div>
+              <div class="form-section__subtitle">Course and mark information</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="{{ form.course.id_for_label }}" class="cs-form-label">
+                Course Title <span>*</span>
+              </label>
+              {{ form.course }}
+            </div>
+            <div class="form-field">
+              <label for="{{ form.course_code.id_for_label }}" class="cs-form-label">
+                Course Code <span>*</span>
+              </label>
+              {{ form.course_code }}
+            </div>
+            <div class="form-field">
+              <label for="{{ form.ca_mark.id_for_label }}" class="cs-form-label">
+                CA Mark <span>*</span>
+              </label>
+              {{ form.ca_mark }}
+            </div>
+            <div class="form-field">
+              <label for="{{ form.exam_mark.id_for_label }}" class="cs-form-label">
+                Exam Mark <span>*</span>
+              </label>
+              {{ form.exam_mark }}
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4: Uploads -->
+        <div class="form-section">
+          <div class="form-section__header">
+            <div class="form-section__icon"><i data-lucide="paperclip"></i></div>
+            <div>
+              <div class="form-section__title">Supporting Document</div>
+              <div class="form-section__subtitle">Upload your result slip or relevant document</div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="cs-form-label">Upload Proof / Document <span>*</span></label>
+            <div class="upload-zone">
+              <span class="upload-zone__icon">📁</span>
+              {{ form.proof }}
+              <div class="upload-zone__hint">PDF, JPG, PNG — Max 10MB</div>
+            </div>
+            <div class="field-hint">Upload your result slip, transcript, or any relevant academic screenshot</div>
+          </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="form-submit-area">
+          <button type="submit" class="btn-form-submit" id="submitComplaintBtn">
+            <span>Submit & Proceed to Payment →</span>
+          </button>
+          <p class="form-disclaimer">
+            By submitting, you agree that we may act on your behalf to deliver this complaint.
+            Your data is <strong>encrypted</strong> and handled confidentially.
+          </p>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="cs-footer">
+    <div class="cs-footer__bottom" style="margin-top:0;border-top:none;padding-top:28px;">
+      <p>© 2026 Student Complaint Service · Cameroon</p>
+      <div class="footer-pills">
+        <span class="footer-pill"><i data-lucide="lock" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i> SSL Secured</span>
+        <span class="footer-pill"><i data-lucide="zap" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i> Fast Processing</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'complaints/js/main.js' %}"></script>
+  <script>
+    lucide.createIcons();
+    
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (mobileMenuToggle && navLinks) {
+      mobileMenuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        
+        // Toggle icon
+        const icon = mobileMenuToggle.querySelector('i');
+        if (navLinks.classList.contains('active')) {
+          icon.setAttribute('data-lucide', 'x');
+        } else {
+          icon.setAttribute('data-lucide', 'menu');
+        }
+        lucide.createIcons();
+      });
+    }
+
+    // Style Django-rendered form widgets
+    document.querySelectorAll('.form-card input[type=text], .form-card input[type=email], .form-card input[type=number], .form-card select, .form-card textarea').forEach(el => {
+      el.classList.add('cs-input');
+    });
+    // Wrap django file inputs in upload-zone if needed
+    document.querySelectorAll('.upload-zone input[type=file]').forEach(input => {
+      input.addEventListener('change', function() {
+        const hint = this.closest('.upload-zone').querySelector('.upload-zone__hint');
+        if (hint && this.files.length) {
+          hint.textContent = '✓ ' + this.files[0].name;
+          hint.style.color = 'var(--green-600)';
+          hint.style.fontWeight = '700';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
