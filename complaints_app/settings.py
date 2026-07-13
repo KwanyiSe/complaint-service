@@ -5,7 +5,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-change-this-in-production-abc123'
 ALLOWED_HOSTS = ['kwanyise.pythonanywhere.com','127.0.0.1', 'localhost']
-DEBUG = True
+
+
+if ALLOWED_HOSTS == "kwanyise.pythonanywhere.com":
+    DEBUG = False
+else:
+    DEBUG = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
