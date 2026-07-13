@@ -4,9 +4,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-change-this-in-production-abc123'
-ALLOWED_HOSTS = ['kwanyise.pythonanywhere.com']
-DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['kwanyise.pythonanywhere.com','127.0.0.1', 'localhost']
+DEBUG = False
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
